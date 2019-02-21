@@ -25,7 +25,7 @@ public class TodoService {
 	}
 
 	public Todo getTodo(Integer todoCode) {
-		return this.todoRepository.findOne(todoCode);
+		return this.todoRepository.getOne(todoCode);
 	}
 
 	public Todo addTodo(TodoInfo todoInfo) {
@@ -50,7 +50,11 @@ public class TodoService {
 	}
 
 	public void deleteTodo(Integer todoCode) {
-		this.todoRepository.delete(todoCode);
+		Todo todo = getTodo(todoCode);
+		
+		if (todo != null) {
+			this.todoRepository.delete(todo);
+		}
 	}
 	
 	private Todo getTodo(TodoInfo todoInfo) {

@@ -1,13 +1,22 @@
 server:
   port: 8080
-  context-path: /todo
+  servlet:
+    context-path: /todo
 
 info:
   app:
     name: TODO Checklist
     description: Backend Layer TODO Checklist
     version: 1.0
-    
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: heapdump,threaddump,info,metrics,health
+  server:
+    port: 8081
+
 endpoint:
   base: /api
 
