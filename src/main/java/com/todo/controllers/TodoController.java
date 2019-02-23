@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.model.Todo;
 import com.todo.model.TodoInfo;
+import com.todo.model.TodoResponse;
 import com.todo.services.TodoService;
 
 @RestController
@@ -60,9 +61,9 @@ public class TodoController {
 	@RequestMapping(value = "/todo/{todoCode}", method = RequestMethod.DELETE, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-	public boolean deleteTodo(@PathVariable Integer todoCode) {
+	public TodoResponse deleteTodo(@PathVariable Integer todoCode) {
 		this.todoService.deleteTodo(todoCode);
-		return true;
+		return new TodoResponse(true);
 	}
 
 }

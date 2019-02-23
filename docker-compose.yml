@@ -2,6 +2,7 @@ version: '3'
 
 services:
   backend:
+    container_name: todo-checklist-be
     build: .
     ports:
      - "8080:8080"
