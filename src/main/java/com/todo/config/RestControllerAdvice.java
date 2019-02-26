@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.todo.common.ResponseEnvelop;
+import com.todo.exception.NotFoundException;
 
 @ControllerAdvice("com.todo")
 public class RestControllerAdvice implements ResponseBodyAdvice<Object> {
@@ -56,6 +57,16 @@ public class RestControllerAdvice implements ResponseBodyAdvice<Object> {
                 .collect(Collectors.toList());
         
         response.setErrors(validationErrors);
+        return response;
+    }
+	
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ResponseEnvelop<?> processNotFoundException(NotFoundException ex) {
+        logger.error("Unexpected exception occurred: ", ex);
+        ResponseEnvelop<?> response = new ResponseEnvelop<Object>(false, "");
+        response.addError(ex.getMessage());
         return response;
     }
 	

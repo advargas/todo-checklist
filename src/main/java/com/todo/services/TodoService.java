@@ -2,10 +2,12 @@ package com.todo.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.todo.exception.NotFoundException;
 import com.todo.model.Todo;
 import com.todo.model.TodoInfo;
 import com.todo.repository.TodoRepository;
@@ -24,8 +26,14 @@ public class TodoService {
 		return this.todoRepository.findAll();
 	}
 
-	public Todo getTodo(Integer todoCode) {
-		return this.todoRepository.getOne(todoCode);
+	public Todo getTodo(Integer todoCode) throws NotFoundException {
+		Optional<Todo> result = this.todoRepository.findById(todoCode);
+		
+		if (result.isPresent()) {
+			return result.get();
+		} else {
+			throw new NotFoundException();
+		}
 	}
 
 	public Todo addTodo(TodoInfo todoInfo) {
@@ -36,7 +44,7 @@ public class TodoService {
 		return todo;
 	}
 
-	public Todo updateTodo(Integer todoCode, TodoInfo todoInfo) {
+	public Todo updateTodo(Integer todoCode, TodoInfo todoInfo) throws NotFoundException {
 		
 		Todo todo = getTodo(todoCode);
 		
@@ -49,7 +57,7 @@ public class TodoService {
 		return null;
 	}
 
-	public void deleteTodo(Integer todoCode) {
+	public void deleteTodo(Integer todoCode) throws NotFoundException {
 		Todo todo = getTodo(todoCode);
 		
 		if (todo != null) {
