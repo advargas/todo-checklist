@@ -23,10 +23,11 @@ endpoint:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://docker.for.mac.localhost:3306/todo
+    #url: jdbc:mysql://docker.for.mac.localhost:3306/todo
+    url: jdbc:mysql://localhost:3306/todo
     username: root
     password: password

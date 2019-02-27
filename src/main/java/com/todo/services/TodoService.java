@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.todo.exception.NotFoundException;
@@ -23,7 +24,7 @@ public class TodoService {
     }
 
 	public List<Todo> getAllTodos() {
-		return this.todoRepository.findAll();
+		return this.todoRepository.findAll(new Sort(Sort.Direction.ASC, "createdAt"));
 	}
 
 	public Todo getTodo(Integer todoCode) throws NotFoundException {
